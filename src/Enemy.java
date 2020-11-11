@@ -1,4 +1,5 @@
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -9,6 +10,8 @@ public class Enemy {
     private Rectangle hitbox;
     private Image image;
     private float xSpeed, ySpeed;
+    private int health = 100;
+    private int damage = 50;
     
     private static int GAME_WIDTH;
     private static int GAME_HEIGHT;
@@ -28,9 +31,19 @@ public class Enemy {
         return hitbox;
     }
     
-    public boolean hit(int x, int y){
-        if(hitbox.contains(x,y)) return true;
+    public boolean hit(Rectangle r){
+        if(hitbox.intersects(r)) return true;
         else return false;
+    }
+    public void takeDamage(int i){
+        health = health - i;
+    }
+    public int getHealth(){
+        return health;
+    }
+    
+    public void setHealth(int i){
+        health = i;
     }
     public static void setGameSize(int x, int y){
         GAME_WIDTH = x;
@@ -38,12 +51,12 @@ public class Enemy {
     }
     
     
-    public void move(){
+    public void move(float x,float y){
+          
+        xSpeed= (x - hitbox.getX());
+        ySpeed= (y - hitbox.getY());
         
-        xSpeed= (100 - hitbox.getX());
-        ySpeed= (100 - hitbox.getY());
-        
-        float factor = (float) (1 / Math.sqrt(xSpeed*xSpeed + ySpeed*ySpeed));
+        float factor = (float) (.2 / Math.sqrt(xSpeed*xSpeed + ySpeed*ySpeed));
         xSpeed*=factor;
         ySpeed*=factor;
         
@@ -58,7 +71,16 @@ public class Enemy {
     
     public void draw(){
         image.draw(hitbox.getX(), hitbox.getY());
+        
     }
+    
+    public float getXPos(){
+        return hitbox.getX();
+    }
+    public float getYPos(){
+        return hitbox.getY();
+    }
+    
 
     
     
