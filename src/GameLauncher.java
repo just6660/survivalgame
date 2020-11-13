@@ -10,7 +10,11 @@ public class GameLauncher extends StateBasedGame {
     public void initStatesList(GameContainer gc) throws SlickException {
        //list other screens in here - first one is opening screen
        this.addState(new startScreen());
+       this.addState(new Instructions());
        this.addState(new mainGame());
+       this.addState(new endScreen());
+       this.addState(new winScreen());
+       
     }
 
     public static void main(String args[]) throws SlickException {
@@ -20,6 +24,7 @@ public class GameLauncher extends StateBasedGame {
         app.setShowFPS(false);
         app.setTargetFrameRate(100);
         app.start();
+        
     }
 
 }
